@@ -90,7 +90,7 @@ app.post("/post-blog", (req, res) => {
   res.render("blog-admin", { flag: flag });
 });
 
-app.listen(PORT, () => console.log(`App is online on port ${PORT}.`));
+app.listen(process.env.PORT || PORT, () => console.log(`App is online on port ${PORT}.`));
 
 // app.get("/demo", (req, res) => {
 //   res.send(req.query.name + " " + req.query.age);
