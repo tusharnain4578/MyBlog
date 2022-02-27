@@ -15,20 +15,18 @@ const PORT = 3000;
 //Array of obj
 let posts = [];
 
-LoadHomeBlogs=()=>{
+LoadHomeBlogs = () => {
   fs.readFile("./data/blogs.json", "utf8", (err, jsonString) => {
     if (err) {
       console.log("File read failed:", err);
       return;
-    } else console.log('Data file read successful');
-    if (jsonString!=="")
-    posts = JSON.parse(jsonString);
+    } else console.log("Data file read successful");
+    if (jsonString !== "") posts = JSON.parse(jsonString);
   });
-}
+};
 LoadHomeBlogs();
 
 app.get("/", (req, res) => {
-  
   LoadHomeBlogs();
   res.render("home", { posts: posts });
 });
@@ -76,9 +74,11 @@ app.post("/post-blog", (req, res) => {
 
   fs.readFile("./data/blogs.json", "utf8", (err, jsonString) => {
     if (err) console.log("File read failed:", err);
-    let data = JSON.parse(jsonString);
-    if(data!=="")
-    data.push(thisPost);
+    if (jsonString !== "") {
+      let data = JSON.parse(jsonString);
+      data.push(thisPost);
+    }
+
   });
 
   let stringifiedPosts = JSON.stringify(posts);
@@ -90,7 +90,9 @@ app.post("/post-blog", (req, res) => {
   res.render("blog-admin", { flag: flag });
 });
 
-app.listen(process.env.PORT || PORT, () => console.log(`App is online on port ${PORT}.`));
+app.listen(process.env.PORT || PORT, () =>
+  console.log(`App is online on port ${PORT}.`)
+);
 
 // app.get("/demo", (req, res) => {
 //   res.send(req.query.name + " " + req.query.age);
