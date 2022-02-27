@@ -1,0 +1,21 @@
+<div class="card">
+    <div class="card-body">
+
+        <h5 class="card-title">
+            <%= post.title %>
+                <span style="font-size: 1rem;" class="float-end">
+                    <%= post.date %>
+                </span>
+        </h5>
+
+
+
+        <p class="card-text">
+            <%= post.post.substr(0, 110) +"..." %>
+        </p>
+
+        <form action=<%- `/blog/${post.kebabTitle}` %> method="POST">
+            <button class="btn btn-sm btn-primary">Read More</button>
+        </form>
+    </div>
+</div>
