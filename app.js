@@ -5,12 +5,14 @@ const _ = require("lodash");
 
 const fs = require("fs");
 const { json } = require("express/lib/response");
+const { title } = require("process");
 
 const app = express();
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 const PORT = 3000;
+
 
 //Array of obj
 let posts = [];
@@ -50,7 +52,28 @@ app.post("/blog/:title", (req, res) => {
   if (i === posts.length) res.send("NOT FOUND!!!");
 });
 
+app.post("/blog/delete/:title",(req,res)=>{
+  //Deleting data(posts) from json file
+
+  posts = posts.filter((el)=>{
+    return el.kebabTitle !== req.params.title;
+  });
+
+  let stringifiedPosts = JSON.stringify(posts);
+  fs.writeFile("./data/blogs.json", stringifiedPosts, (err) => {
+    if (err) console.log("The error is ==>> " + err);
+    else console.log("successfully written file in blogs.json");
+  });
+  res.redirect("/");
+})
+
+
+app.get("/post-blog", (req,res)=>{
+  res.redirect("/admin");
+})
+
 app.post("/post-blog", (req, res) => {
+  console.log(req.body);
   let title = req.body.title;
   let post = req.body.post;
 
