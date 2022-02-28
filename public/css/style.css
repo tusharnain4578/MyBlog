@@ -1,35 +1,26 @@
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
 body {
   font-family: Arial;
-  padding: 20px;
   background: #f1f1f1;
 }
-.navbtn {
-  border: none;
-}
-.fakeimg {
-  background-color: #aaa;
-  width: 100%;
-  padding: 20px;
-}
+
 
 /* Add a card effect for articles */
 .card {
   background-color: white;
-  padding: 20px;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .delbtn {
   -webkit-border-radius: 28;
   -moz-border-radius: 28;
   border-radius: 28px;
-  -webkit-box-shadow: 0px 1px 3px #666666;
-  -moz-box-shadow: 0px 1px 3px #666666;
-  box-shadow: 0px 1px 3px #666666;
+
   font-family: Arial;
   color: #ffffff;
   font-size: 12px;
