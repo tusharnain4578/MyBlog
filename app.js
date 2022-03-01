@@ -11,8 +11,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const PORT = 3000;
 
 //MONGODB Connection
-const dbPassword = "12341234";
-const DBURL = "mongodb+srv://naintushar:" + dbPassword + "@cluster0.4pcgj.mongodb.net/myblogs?retryWrites=true&w=majority";
+// const dbPassword = "12341234";
+const DBURL = "mongodb://127.0.0.1:27017/myblog";
 mongoose.connect(DBURL);
 
 const blogSchema = new mongoose.Schema({
