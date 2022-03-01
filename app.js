@@ -2,10 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const _ = require("lodash");
-
-const fs = require("fs");
-const { json } = require("express/lib/response");
-const { title } = require("process");
+const mongoose = require("mongoose");
 
 const app = express();
 app.set("view engine", "ejs");
@@ -13,24 +10,24 @@ app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 const PORT = 3000;
 
+//MONGODB Connection
+const DBURL = "mongodb+srv://naintushar:12341234@cluster0.4pcgj.mongodb.net/myblogs?retryWrites=true&w=majority";
+mongoose.connect(DBURL);
 
-//Array of obj
-let posts = [];
+const blogSchema = new mongoose.Schema({
+  title: String,
+  post: String,
+  date: String,
+  kebabTitle: String,
+});
 
-LoadHomeBlogs = () => {
-  fs.readFile("./data/blogs.json", "utf8", (err, jsonString) => {
-    if (err) {
-      console.log("File read failed:", err);
-      return;
-    } else console.log("Data file read successful");
-    if (jsonString !== "") posts = JSON.parse(jsonString);
-  });
-};
-LoadHomeBlogs();
+const posts = mongoose.model("post", blogSchema);
 
 app.get("/", (req, res) => {
-  LoadHomeBlogs();
-  res.render("home", { posts: posts });
+  posts.find((err, posts) => {
+    if (err) console.log(err);
+    else res.render("home", { posts: posts });
+  });
 });
 
 var flag;
@@ -41,39 +38,27 @@ app.get("/admin", (req, res) => {
   res.render("blog-admin", { flag: flag });
 });
 
-app.post("/blog/:title", (req, res) => {
-  for (var i = 0; i < posts.length; i++) {
-    if (req.params.title === posts[i].kebabTitle) {
-      res.render("blog", { post: posts[i] });
-      break;
-    }
-  }
-
-  if (i === posts.length) res.send("NOT FOUND!!!");
+app.post("/blog/:id", (req, res) => {
+  posts.find({ _id: req.params.id }, (err, post) => {
+    if (err) console.log(err);
+    else res.render("blog", { post: post[0] });
+  });
 });
 
-app.post("/blog/delete/:title",(req,res)=>{
-  //Deleting data(posts) from json file
-
-  posts = posts.filter((el)=>{
-    return el.kebabTitle !== req.params.title;
+app.post("/blog/delete/:id", (req, res) => {
+  posts.findByIdAndDelete(req.params.id, (err, posts) => {
+    if (err) console.log(err);
+    else console.log("Record deleted successfully");
   });
 
-  let stringifiedPosts = JSON.stringify(posts);
-  fs.writeFile("./data/blogs.json", stringifiedPosts, (err) => {
-    if (err) console.log("The error is ==>> " + err);
-    else console.log("successfully written file in blogs.json");
-  });
   res.redirect("/");
-})
+});
 
-
-app.get("/post-blog", (req,res)=>{
+app.get("/post-blog", (req, res) => {
   res.redirect("/admin");
-})
+});
 
 app.post("/post-blog", (req, res) => {
-  console.log(req.body);
   let title = req.body.title;
   let post = req.body.post;
 
@@ -85,37 +70,20 @@ app.post("/post-blog", (req, res) => {
   });
 
   flag = true;
-  let thisPost = {
-    date: date,
+
+  const thisPost = new posts({
     title: title,
     post: post,
+    date: date,
     kebabTitle: _.kebabCase(title),
-  };
-  posts.push(thisPost);
-
-  //Saving data(posts) in json file
-
-  fs.readFile("./data/blogs.json", "utf8", (err, jsonString) => {
-    if (err) console.log("File read failed:", err);
-    if (jsonString !== "") {
-      let data = JSON.parse(jsonString);
-      data.push(thisPost);
-    }
-
   });
 
-  let stringifiedPosts = JSON.stringify(posts);
-  fs.writeFile("./data/blogs.json", stringifiedPosts, (err) => {
-    if (err) console.log("The error is ==>> " + err);
-    else console.log("successfully written file in blogs.json");
-  });
+  thisPost.save();
 
   res.render("blog-admin", { flag: flag });
 });
 
-app.listen(process.env.PORT || PORT, () =>
-  console.log(`App is online on port ${PORT}.`)
-);
+app.listen(process.env.PORT || PORT, () => console.log(`App is online on port ${PORT}.`));
 
 // app.get("/demo", (req, res) => {
 //   res.send(req.query.name + " " + req.query.age);

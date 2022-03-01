@@ -14,11 +14,11 @@
             <%= post.post.substr(0, 110) +"..." %>
         </p>
 
-        <form action=<%- `/blog/${post.kebabTitle}` %> method="POST">
+        <form action=<%- `/blog/${post._id}` %> method="POST">
             <button class="btn btn-sm btn-primary">Read More</button>
         </form>
         
-        <form action=<%- `/blog/delete/${post.kebabTitle}` %> method="POST">
+        <form action=<%- `/blog/delete/${post._id}` %> method="POST">
         <button class="delbtn float-end"> Delete </button>
         </form>
     </div>
