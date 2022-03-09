@@ -5,9 +5,7 @@ const model = require("../model");
 const bcrypt = require("bcryptjs");
 
 route.get("/", (req, res) => {
-  res.render("register", {
-    layout: false,
-  });
+  res.render("register");
 });
 
 route.post("/", (req, res) => {
@@ -29,7 +27,7 @@ route.post("/", (req, res) => {
       model.users.findOne({ email: email }).then((user) => {
         if (user) {
           msgArr.push({ type: "danger", msg: "Email already registered!" });
-          res.render("register", { msg: msgArr, name: name, email: email, layout: false });
+          res.render("register", { msg: msgArr, name: name, email: email });
         } else {
           bcrypt.genSalt(10, (err, salt) => {
             bcrypt.hash(req.body.password, salt, async (err, hash) => {
@@ -51,7 +49,7 @@ route.post("/", (req, res) => {
     }
   }
   if (msgArr.length !== 0) {
-    res.render("register", { msg: msgArr, name: name, email: email, layout: false });
+    res.render("register", { msg: msgArr, name: name, email: email });
   }
 });
 

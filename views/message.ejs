@@ -1,6 +1,6 @@
 <% if(typeof msg !== 'undefined'){ %>
-<div>
   <% msg.forEach((el)=>{ %>
+<div>
 
     <% if(el.type==='success' ){%>
   <div class="alert alert-success alert-dismissible fade show h-50 p-2" role="alert">
@@ -17,7 +17,7 @@
   <%= el.msg %>
   <button type="button" class="btn-close h-50 p-2" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
-  <% })%>
-    
+  
 </div>
+<% })%>
 <%}%>

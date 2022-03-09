@@ -6,6 +6,7 @@ mongoose.connect(process.env.DBURL);
 
 //Posts Collection Model
 const blogSchema = new mongoose.Schema({
+  username: String,
   title: String,
   post: String,
   date: String,
@@ -17,6 +18,7 @@ const posts = mongoose.model("post", blogSchema);
 //Users Collection Model
 
 const userSchema = new mongoose.Schema({
+  name: String,
   email: String,
   password: String,
 });

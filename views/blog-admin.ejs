@@ -4,9 +4,15 @@
 <div class="alert alert-primary invisible" role="alert">Post added successfully!</div>
 <% } %>
 
-<div class="container-fluid row justify-content-center pt-3">
+<div class="container-fluid row justify-content-center pt-1">
+  <h2 class="text-center">
+    Welcome! <u><strong><%= name %></strong></u
+    >, post your blog below <a href="/logout" class="btn btn-sm btn-danger">Log out</a>
+  </h2>
+
   <div class="col-md-7 col-sm-10 my-5">
     <form action="/post-blog" method="POST">
+      <input type="hidden" name="username" value="<%= name %>" />
       <input name="title" type="text" style="border: outset 4px grey" class="form-control" placeholder="Title here..." required />
       <textarea name="post" style="border: outset 4px grey; resize: none; height: 300px; overflow-y: scroll" class="w-100 my-3 p-1" placeholder="Enter post here...." required></textarea>
       <button class="btn btn-md btn-primary float-end">POST</button>

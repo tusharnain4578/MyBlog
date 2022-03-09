@@ -1,6 +1,11 @@
 <div class="container-fluid row justify-content-center pt-5">
   <div class="card col-md-8 col-sm-10 my-5">
-    <h2><%= post.title %></h2>
+    <h2>
+      <%= post.title %>
+      <span class="float-end my-2" style="font-size: 1rem"
+        >Posted by <strong><u><%= post.username %></u></strong></span
+      >
+    </h2>
     <h5><%= post.date %></h5>
     <p class="my-4"><%= post.post %></p>
   </div>
