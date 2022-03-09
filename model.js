@@ -2,7 +2,8 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 
 //MONGODB Connection
-mongoose.connect(process.env.DBURL);
+const DBURL = "mongodb+srv://naintushar:<password>@myblog.edl2v.mongodb.net/myblog";
+mongoose.connect(DBURL);
 
 //Posts Collection Model
 const blogSchema = new mongoose.Schema({
