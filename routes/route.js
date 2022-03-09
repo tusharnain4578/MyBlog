@@ -121,11 +121,16 @@ route.get("/login", (req, res) => {
 });
 
 route.post("/login", (req, res, next) => {
-  passport.authenticate("local", {
-    successRedirect: "/admin",
-    failureRedirect: "/login",
-    failureFlash: true,
-  })(req, res, next);
+  const { email, password } = req.body;
+  if (!email || !password) {
+    res.render("login", { msg: [{ type: "danger", msg: "Missing Credentials" }], email: email });
+  } else {
+    passport.authenticate("local", {
+      successRedirect: "/admin",
+      failureRedirect: "/login",
+      failureFlash: true,
+    })(req, res, next);
+  }
 });
 
 // Logout
