@@ -1,42 +1,25 @@
-<%- include('header') -%>
+<% if(flag){ %>
+<div class="alert alert-primary visible" role="alert">Post added successfully!</div>
+<% }else { %>
+<div class="alert alert-primary invisible" role="alert">Post added successfully!</div>
+<% } %>
 
+<div class="container-fluid row justify-content-center pt-3">
+  <div class="col-md-7 col-sm-10 my-5">
+    <form action="/post-blog" method="POST">
+      <input name="title" type="text" style="border: outset 4px grey" class="form-control" placeholder="Title here..." required />
+      <textarea name="post" style="border: outset 4px grey; resize: none; height: 300px; overflow-y: scroll" class="w-100 my-3 p-1" placeholder="Enter post here...." required></textarea>
+      <button class="btn btn-md btn-primary float-end">POST</button>
+    </form>
+  </div>
+</div>
 
+<% if(flag===true){%>
+<script>
+  let target = document.querySelector(".alert");
 
-    <% if(flag){ %>
-        <div class="alert alert-primary visible" role="alert">
-            Post added successfully!
-        </div>
-        <% }else { %>
-            <div class="alert alert-primary invisible" role="alert">
-                Post added successfully!
-            </div>
-            <% } %>
-
-
-
-                <div class="container-fluid row justify-content-center pt-3">
-                    <div class="col-md-7 col-sm-10 my-5">
-                        <form action="/post-blog" method="POST">
-                            <input name="title" type="text" style="border:outset 4px grey;" class="form-control"
-                                placeholder="Title here..." required>
-                            <textarea name="post"
-                                style="border:outset 4px grey; resize: none; height: 300px; overflow-y: scroll;"
-                                class="w-100 my-3 p-1" placeholder="Enter post here...." required></textarea>
-                            <button class="btn btn-md btn-primary float-end">POST</button>
-                        </form>
-                    </div>
-                </div>
-
-                <% if(flag===true){%>
-                    <script>
-                        let target = document.querySelector('.alert');
-
-                        setTimeout(() => {
-                            target.classList.add('invisible');
-                        }, 1500);
-                    </script>
-                    <% } %>
-
-
-
-                        <%- include('footer') -%>
+  setTimeout(() => {
+    target.classList.add("invisible");
+  }, 1500);
+</script>
+<% } %>
