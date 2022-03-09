@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 
 //MONGODB Connection
+
 const DBURL = "mongodb+srv://naintushar:tushar123@myblog.edl2v.mongodb.net/myblog";
 mongoose.connect(DBURL);
 
