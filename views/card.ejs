@@ -1,25 +1,25 @@
-<div class="card">
-    <div class="card-body">
+<div class="card row">
+    <div class="card-body col-12 ">
 
         <h5 class="card-title">
-            <%= post.title %>
-                <span style="font-size: 1rem;" class="float-end">
+            <strong style="font-size: 1rem;"><u><%= post.title %></u></strong>
+                <span style="font-size: 0.9rem;" class="float-end">
                     Posted by <strong><%= post.username%></strong> 
                 </span>
         </h5>
         <span style="font-size: 0.9rem;" class="float-end my-0"><%= post.date %></span>
 
 
-        <p class="card-text">
-            <%= post.post.substr(0, 110) +"..." %>
+        <p class="card-text" style="width: 75%;">
+            <%= post.post.substr(0, 90) +"..." %>
         </p>
 
         <form action=<%- `/blog/${post._id}` %> method="POST">
             <button class="btn btn-sm btn-primary">Read More</button>
         </form>
         
-        <form action=<%- `/blog/delete/${post._id}/home` %> method="POST">
-        <button class="delbtn float-end"> Delete </button>
+        <form action=<%- `/blog/delete/${post._id}` %> method="POST">
+        <button class="delbtn float-end "> Delete </button>
         </form>
     </div>
 </div>

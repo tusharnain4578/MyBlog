@@ -51,7 +51,7 @@ route.post("/blog/:id", (req, res) => {
   });
 });
 
-route.post("/blog/delete/:id/:rfrom", (req, res) => {
+route.post("/blog/delete/:id", (req, res) => {
   model.posts.findByIdAndDelete(req.params.id, (err, posts) => {
     if (err) console.log(err);
     else console.log("Record deleted successfully");
@@ -77,7 +77,6 @@ route.post("/post-blog", ensureAuthenticated, async (req, res) => {
   const { username, title, post } = req.body;
   console.log(username);
   let date = new Date().toLocaleDateString("en-us", {
-    weekday: "long",
     year: "numeric",
     month: "short",
     day: "numeric",
@@ -112,7 +111,6 @@ route.get("/login", (req, res) => {
   var msgArr = req.flash("msg");
 
   msgArr.push({ type: "danger", msg: req.flash("error") });
-
   msgArr = msgArr.filter((el) => {
     return el.msg.length > 0;
   });
@@ -122,6 +120,7 @@ route.get("/login", (req, res) => {
 
 route.post("/login", (req, res, next) => {
   const { email, password } = req.body;
+
   if (!email || !password) {
     res.render("login", { msg: [{ type: "danger", msg: "Missing Credentials" }], email: email });
   } else {
