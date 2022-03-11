@@ -37,7 +37,6 @@ var flag;
 route.get("/admin", ensureAuthenticated, (req, res) => {
   flag = false;
 
-  console.log(req.user.name + " logged in.");
   model.posts.find((err, posts) => {
     if (err) console.log(err);
     res.render("blog-admin", { flag: flag, name: req.user.name, posts: posts });
