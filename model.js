@@ -3,6 +3,7 @@ require("dotenv").config();
 
 //MONGODB Connection
 // mongodb+srv://naintushar:tushar123@myblog.edl2v.mongodb.net/myblog
+// mongodb://127.0.0.1:27017/myblog
 mongoose.connect("mongodb+srv://naintushar:tushar123@myblog.edl2v.mongodb.net/myblog");
 
 //Posts Collection Model
