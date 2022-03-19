@@ -18,7 +18,9 @@
         placeholder="Enter post here...."
         required
       ></textarea>
+
       <button id="postdata" class="btn btn-md btn-primary float-end">POST</button>
+      <div class="loader d-inline-block float-end mx-3 my-1 invisible"></div>
     </form>
   </div>
 </div>
@@ -28,6 +30,10 @@
 
   document.querySelector("#blogform").addEventListener("submit", (e) => {
     e.preventDefault();
+    let loader = document.querySelector(".loader");
+
+    loader.classList.replace("invisible", "visible");
+
     let username = document.querySelector("#username").value;
     let title = document.querySelector("#title").value;
     let post = document.querySelector("#post").value;
@@ -43,11 +49,12 @@
     })
       .then((res) => {
         if (res.data.flag === true) {
-          let target = document.querySelector(".alert");
-          target.classList.replace("invisible", "visible");
+          let successAlert = document.querySelector(".alert");
 
+          successAlert.classList.replace("invisible", "visible");
+          loader.classList.replace("visible", "invisible");
           setTimeout(() => {
-            target.classList.replace("visible", "invisible");
+            successAlert.classList.replace("visible", "invisible");
           }, 1500);
 
           document.querySelector("#title").value = "";
