@@ -3,8 +3,7 @@ require("dotenv").config();
 
 //MONGODB Connection
 
-// mongoose.connect("mongodb://127.0.0.1:27017/myblog");
-mongoose.connect("mongodb+srv://naintushar:tushar123@myblog.edl2v.mongodb.net/myblog");
+mongoose.connect("mongodb://127.0.0.1:27017/myblog");
 
 //Posts Collection Model
 const blogSchema = new mongoose.Schema({
