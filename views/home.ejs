@@ -16,9 +16,12 @@
       e.preventDefault();
       axios.post('/blog/delete/<%-post._id%>');
       let target_element = document.querySelector('#card'+'<%- j %>');
+      target_element.style.opacity = "0";
+      setTimeout(() => {
       target_element.parentElement.classList.add('position-fixed');
-    target_element.remove();
-    target_element.parentElement.classList.remove('position-fixed');
+      target_element.remove();
+      // target_element.parentElement.classList.remove('position-fixed');
+    }, 300);
 
     })
   <%j++;%>

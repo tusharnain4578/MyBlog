@@ -54,6 +54,9 @@ body {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+.card {
+  transition: opacity 0.3s;
+}
 .loader {
   border: 6px solid #dbdbdb;
   border-radius: 50%;
