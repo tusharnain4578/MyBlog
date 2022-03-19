@@ -1,8 +1,4 @@
-<% if(flag){ %>
-<div class="alert alert-primary visible" role="alert">Post added successfully!</div>
-<% }else { %>
 <div class="alert alert-primary invisible" role="alert">Post added successfully!</div>
-<% } %>
 
 <div class="container-fluid row justify-content-center pt-1">
   <h2 class="text-center text-dark themeT">
@@ -11,14 +7,60 @@
   </h2>
 
   <div class="col-md-7 col-sm-10 my-5">
-    <form action="/post-blog" method="POST">
-      <input type="hidden" name="username" value="<%= name %>" />
-      <input name="title" type="text" style="border: outset 4px grey" class="form-control inputs" placeholder="Title here..." required />
-      <textarea name="post" style="border: outset 4px grey; resize: none; height: 300px; overflow-y: scroll" class="w-100 my-3 p-1 inputs txarea" placeholder="Enter post here...." required></textarea>
-      <button class="btn btn-md btn-primary float-end">POST</button>
+    <form id="blogform">
+      <input id="username" type="hidden" name="username" value="<%= name %>" />
+      <input id="title" name="title" type="text" style="border: outset 4px grey" class="form-control inputs" placeholder="Title here..." required />
+      <textarea
+        id="post"
+        name="post"
+        style="border: outset 4px grey; resize: none; height: 300px; overflow-y: scroll"
+        class="w-100 my-3 p-1 inputs txarea"
+        placeholder="Enter post here...."
+        required
+      ></textarea>
+      <button id="postdata" class="btn btn-md btn-primary float-end">POST</button>
     </form>
   </div>
 </div>
+
+<script>
+  //post request
+
+  document.querySelector("#blogform").addEventListener("submit", (e) => {
+    e.preventDefault();
+    let username = document.querySelector("#username").value;
+    let title = document.querySelector("#title").value;
+    let post = document.querySelector("#post").value;
+    console.log(username, title, post);
+    axios({
+      method: "post",
+      url: "/post-blog",
+      data: {
+        username: username,
+        title: title,
+        post: post,
+      },
+    })
+      .then((res) => {
+        if (res.data.flag === true) {
+          let target = document.querySelector(".alert");
+          target.classList.replace("invisible", "visible");
+
+          setTimeout(() => {
+            target.classList.replace("visible", "invisible");
+          }, 1500);
+
+          document.querySelector("#title").value = "";
+          document.querySelector("#post").value = "";
+        } else {
+          location.reload();
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  });
+</script>
 
 <% if(flag===true){%>
 <script>

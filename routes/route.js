@@ -56,14 +56,7 @@ route.post("/blog/delete/:id", (req, res) => {
     else console.log("Record deleted successfully");
   });
 
-  if (req.params.rfrom === "modal") {
-    model.posts.find((err, posts) => {
-      if (err) console.log(err);
-      res.render("blog-admin", { flag: flag, name: req.user.name, posts: posts });
-    });
-  } else {
-    res.redirect("/");
-  }
+  res.send({ msg: "deleted successfully" });
 });
 
 route.get("/post-blog", ensureAuthenticated, (req, res) => {
@@ -74,7 +67,8 @@ route.post("/post-blog", ensureAuthenticated, async (req, res) => {
   // let title = req.body.title;
   // let post = req.body.post;
   const { username, title, post } = req.body;
-  console.log(username);
+  // console.log(username);
+  console.log(req.body);
   let date = new Date().toLocaleDateString("en-us", {
     year: "numeric",
     month: "short",
@@ -100,7 +94,8 @@ route.post("/post-blog", ensureAuthenticated, async (req, res) => {
 
   model.posts.find((err, posts) => {
     if (err) console.log(err);
-    res.render("blog-admin", { flag: flag, name: username, posts: posts });
+    // res.render("blog-admin", { flag: flag, name: username, posts: posts });
+    res.send({ flag: flag });
   });
 });
 
@@ -110,6 +105,7 @@ route.get("/login", (req, res) => {
   var msgArr = req.flash("msg");
 
   msgArr.push({ type: "danger", msg: req.flash("error") });
+  msgArr.push({ type: "danger", msg: req.flash("error_msg") });
   msgArr = msgArr.filter((el) => {
     return el.msg.length > 0;
   });

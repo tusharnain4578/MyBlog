@@ -1,9 +1,24 @@
-<%if(posts.length!==0){%>
+<%if(posts.length!==0){%> <% var i = 0; %>
 <div class="container-fluid row justify-content-center pt-5">
   <% posts.forEach((post)=>{ %>
-  <div class="col-md-8 col-sm-12 my-2"><%- include('card', {post : post}) %></div>
-  <%})%>
+  <div class="col-md-8 col-sm-12 my-2"><%- include('card', {post : post, num : i}) %></div>
+  <%i++;%> <%})%>
 </div>
-<%}else{%>
-<div class="alert alert-danger" role="alert">No Post available, Upload from admin page!</div>
 <%}%>
+<div id="emptyalert" class="alert alert-danger <%-(posts.length===0)?`visible`:`invisible` %>" role="alert">No Post available, Upload from admin page!</div>
+
+<script>
+  let delforms = document.querySelectorAll(".delform");
+  <% var j = 0; %>
+  <% posts.forEach((post)=>{ %>
+
+    delforms[<%- j %>].addEventListener('submit', e=>{
+      e.preventDefault();
+      axios.post('/blog/delete/<%-post._id%>');
+      let target_element = document.querySelector('#card'+'<%- j %>');
+      target_element.parentElement.removeChild(target_element);
+    })
+  <%j++;%>
+
+  <%})%>
+</script>
