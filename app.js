@@ -43,7 +43,7 @@ const port = process.env.PORT || 3000;
 
 const start = async () => {
   try {
-    await connectDB("mongodb://127.0.0.1:27017/myblog");
+    await connectDB("mongodb+srv://naintushar:tushar123@myblog.edl2v.mongodb.net/myblog");
     app.listen(port, () => console.log(`Server is listening on port ${port}...`));
   } catch (error) {
     console.log(error);
@@ -51,4 +51,3 @@ const start = async () => {
 };
 start();
 // mongodb://127.0.0.1:27017/myblog
-// mongodb+srv://naintushar:tushar123@myblog.edl2v.mongodb.net/myblog
