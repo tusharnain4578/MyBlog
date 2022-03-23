@@ -52,6 +52,7 @@ function tswitch() {
 }
 
 themeSwitch.addEventListener("click", tswitch);
+
 if (document.cookie == "darkmode=on") {
   themeSwitch.click();
 }
